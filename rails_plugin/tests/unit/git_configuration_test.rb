@@ -108,6 +108,15 @@ class GitConfigurationTest < Test::Unit::TestCase
     assert_equal 'git://git.serpentine.com:1234/tutorial/hello.git', config.remote_master_info.log_safe_path
   end
   
+  def test_remote_master_info_with_should_only_use_username_with_ssh_protocol
+    config = GitConfiguration.new(:repository_path => 'ssh://git.serpentine.com:1234/tutorial/hello.git')
+    config.project = Project.new
+    config.username = 'sammy'
+    config.password = 'soso'
+    assert_equal 'ssh://sammy@git.serpentine.com:1234/tutorial/hello.git', config.remote_master_info.path
+    assert_equal 'ssh://sammy@git.serpentine.com:1234/tutorial/hello.git', config.remote_master_info.log_safe_path
+  end
+  
   def test_remote_master_info_with_userinfo_when_username_supplied_as_attribute_and_no_userinfo_in_path
     config = GitConfiguration.new(:repository_path => 'http://git.serpentine.com/tutorial/hello')
     config.project = Project.new
@@ -141,15 +150,15 @@ class GitConfigurationTest < Test::Unit::TestCase
   def test_remote_master_info_can_build_ssh_path_with_no_specified_port
     config = GitConfiguration.new(:repository_path => 'ssh://jimmy@git.serpentine.com/tutorial/hello')
     config.project = Project.new
-    assert_equal 'ssh://jimmy:@git.serpentine.com/tutorial/hello', config.remote_master_info.path
-    assert_equal 'ssh://jimmy:*****@git.serpentine.com/tutorial/hello', config.remote_master_info.log_safe_path
+    assert_equal 'ssh://jimmy@git.serpentine.com/tutorial/hello', config.remote_master_info.path
+    assert_equal 'ssh://jimmy@git.serpentine.com/tutorial/hello', config.remote_master_info.log_safe_path
   end
   
   def test_remote_master_info_can_build_ssh_path_with_specified_port
     config = GitConfiguration.new(:repository_path => 'ssh://jimmy@git.serpentine.com:877/tutorial/hello')
     config.project = Project.new
-    assert_equal 'ssh://jimmy:@git.serpentine.com:877/tutorial/hello', config.remote_master_info.path
-    assert_equal 'ssh://jimmy:*****@git.serpentine.com:877/tutorial/hello', config.remote_master_info.log_safe_path
+    assert_equal 'ssh://jimmy@git.serpentine.com:877/tutorial/hello', config.remote_master_info.path
+    assert_equal 'ssh://jimmy@git.serpentine.com:877/tutorial/hello', config.remote_master_info.log_safe_path
   end
   
   def test_remote_master_info_with_userinfo_ignores_credentials_when_nil_scheme

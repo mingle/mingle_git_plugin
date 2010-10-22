@@ -110,6 +110,9 @@ class GitConfiguration < ActiveRecord::Base
       if uri.scheme == 'git'
         path = "#{uri.scheme}://#{host_port_path_from(uri)}"
         log_safe_path = path
+      elsif uri.scheme == 'ssh'
+        path = "#{uri.scheme}://#{remote_user.to_s}@#{host_port_path_from(uri)}"
+        log_safe_path = path
       end
       
       GitRemoteMasterInfo.new(path, log_safe_path)
