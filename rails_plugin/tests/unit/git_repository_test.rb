@@ -92,7 +92,7 @@ class GitRepositoryTest < Test::Unit::TestCase
     assert_equal 'b5ad6f93ec7252f8acd40a954451f3c25615a699', sample_changeset.commit_id
     assert_equal "Bryan O'Sullivan <bos@serpentine.com>", sample_changeset.author
     assert_equal "Introduce a typo into hello.c.", sample_changeset.description
-    assert_equal 'Sun Aug 17 05:05:04 UTC 2008', sample_changeset.time.utc.to_s
+    assert_equal 'Sat Aug 16 20:05:04 UTC 2008', sample_changeset.time.utc.to_s
   end
   
   def test_next_changesets_returns_changesets_from_zero_up_to_limit_when_repos_has_more_changesets_than_limit

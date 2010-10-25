@@ -69,6 +69,7 @@ ActiveRecord::Migrator.migrate(File.dirname(__FILE__) + '/../db/migrate')
 class Project
   
   @@instances = {}
+  @@current = nil
   
   class << self
     def register_instance_for_find(project)

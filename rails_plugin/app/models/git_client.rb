@@ -36,14 +36,14 @@ class GitClient
 
   def log_for_rev(rev)
     rev = sanitize(rev)
-    git_log("log #{rev} -1").first
+    git_log("log --date=rfc #{rev} -1").first
   end
 
   def log_for_revs(from, to, limit=nil, &exclude_block)
     from = sanitize(from)
     to = sanitize(to)
     window = from.blank? ? to : "#{from}..#{to}"
-    git_log("log --reverse #{window}", limit, &exclude_block)
+    git_log("log --date=rfc --reverse #{window}", limit, &exclude_block)
   end
 
   def git_patch_for(commit_id, git_patch)
@@ -176,7 +176,7 @@ class GitClient
         elsif line.starts_with?('Author:')
           log_entry[:author] = line.sub(/Author: /, '')
         elsif line.starts_with?('Date:')
-          log_entry[:time] = Time.parse(line.sub(/Date:   /, ''))
+          log_entry[:time] = Time.rfc2822(line.sub(/Date:   /, ''))
         else
           log_entry[:description] << line[4..-1] + "\n" unless line.empty?
         end
