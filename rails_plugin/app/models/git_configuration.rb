@@ -133,7 +133,7 @@ class GitConfiguration < ActiveRecord::Base
   end
   
   def cache_dir
-    File.expand_path(File.join(MINGLE_DATA_DIR, 'mingle_git_plugin_data', id.to_s))
+    File.expand_path(File.join(MINGLE_DATA_DIR, 'plugin_data', 'mingle_git_plugin', id.to_s))
   end
   
   # this is hacktastic, but we'd need to make some design changes to 
