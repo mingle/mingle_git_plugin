@@ -23,8 +23,9 @@ h2. Installation
 $ git clone git://github.com/ThoughtWorksStudios/mingle_git_plugin.git
 
 * Go to the rails_plugin directory inside the mingle_git_plugin directory.
-* Run this command: rake deploy MINGLE_ROOT=path_to_mingle_root_directory.
-* It will install the plugin into the vendor/plugins directory of your Mingle install directory.
+* Run this command: rake dist
+* Copy dist/mingle_git_plugin.tar.gz into the vendor/plugins directory of your Mingle install directory.
+* In the vendor/plugins directory, expand the archive: tar xzvf mingle_git_plugin.tar.gz
 * Restart the mingle server.
 
 h2. License
