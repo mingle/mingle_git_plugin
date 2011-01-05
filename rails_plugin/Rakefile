@@ -50,7 +50,7 @@ task :deploy => [:dist] do
 end
 
 desc "Create distribution"
-task :dist do
+task :dist => [:test] do
   rm_rf('dist')
   mkdir_p('dist/mingle_git_plugin')
   ['app', 'config', 'db', 'init.rb'].each do |entry|
@@ -70,4 +70,4 @@ task :deploy_windows => [:deploy] do
 end
 
 desc "default task"
-task :default => [:test]
+task :default => [:dist]
