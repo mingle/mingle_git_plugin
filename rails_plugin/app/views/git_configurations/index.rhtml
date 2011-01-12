@@ -4,21 +4,19 @@
 <h1>Git repository settings</h1>
 
 <% form_tag({:action => 'save'}, {:id => 'project-properties'}) do -%>
-   <fieldset>
-     <legend><span class="notes">(Mingle will clone the repository specified below onto the same host machine on which Mingle is running.  This is necessary because Git repository history can only be obtained from a local repository.)</span></legend>
-     <p>
+  <div class="instructions">(Mingle will clone the repository specified below onto the same host machine on which Mingle is running.  This is necessary because Git repository history can only be obtained from a local repository.)</div>
+     <div class="form_item">
        <label for="git_configuration_repository_path">Path: <span class="notes">(the file path or url which points to your Git repository)</span></label>
 
        <%= text_field 'git_configuration', 'repository_path', { :class => 'width-full' } %>
-     </p>
-     <p>
+     </div>
+     <div class="form_item">
        <label for="git_configuration_repository_user_name">Repository user name: </label>
        <%= text_field 'git_configuration', 'username', { :class => 'width-full' } %>
-     </p>
-     <p id="login_user_password_panel">
+     </div>
+     <div id="login_user_password_panel" class="form_item">
        <input value="Change repository password" type="button" onclick="window.openChangeRepositoryUserPasswordPanel()">
-     </p>
-   </fieldset>
+     </div>
 
   <%= hidden_field_tag 'id', @git_configuration.id if @git_configuration %>
 
