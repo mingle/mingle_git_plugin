@@ -30,7 +30,7 @@ window.changeRepositoryUserPasswordPanel = $('login_user_password_panel')
 window.openChangeRepositoryUserPasswordPanel = function() {
  var panel = window.changeRepositoryUserPasswordPanel;
  panel._innerHTML = panel.innerHTML;
- panel.innerHTML = "<label for='git_configuration_repository_password'>Repository password: &nbsp;&nbsp;<a href='javascript:void(0)' onclick='window.changeRepositoryUserPasswordPanel.innerHTML = window.changeRepositoryUserPasswordPanel._innerHTML'>Cancel</a></label><input class='width-full' id='project_repository_password' name='git_configuration[password]' size='30' type='password'>"
+ panel.innerHTML = "<label for='git_configuration_repository_password'>Repository password: &nbsp;&nbsp;<a href='javascript:void(0)' onclick='window.changeRepositoryUserPasswordPanel.innerHTML = window.changeRepositoryUserPasswordPanel._innerHTML'>Cancel</a></label><input class='large' id='project_repository_password' name='git_configuration[password]' size='30' type='password'>"
 }
 SCRIPT
 %>
