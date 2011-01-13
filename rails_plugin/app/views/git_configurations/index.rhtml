@@ -15,7 +15,7 @@
        <%= text_field 'git_configuration', 'username', { :class => 'width-full' } %>
      </div>
      <div id="login_user_password_panel" class="form_item">
-       <input value="Change repository password" type="button" onclick="window.openChangeRepositoryUserPasswordPanel()">
+       <a href="javascript:void(0)" onclick="window.openChangeRepositoryUserPasswordPanel()" class="change_password">Change password</a>
      </div>
 
   <%= hidden_field_tag 'id', @git_configuration.id if @git_configuration %>
