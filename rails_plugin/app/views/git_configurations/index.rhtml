@@ -8,11 +8,11 @@
      <div class="form_item">
        <label for="git_configuration_repository_path">Path: <span class="notes">(the file path or url which points to your Git repository)</span></label>
 
-       <%= text_field 'git_configuration', 'repository_path', { :class => 'width-full' } %>
+       <%= text_field 'git_configuration', 'repository_path', :class => 'large' %>
      </div>
      <div class="form_item">
        <label for="git_configuration_repository_user_name">Repository user name: </label>
-       <%= text_field 'git_configuration', 'username', { :class => 'width-full' } %>
+       <%= text_field 'git_configuration', 'username', :class => 'large' %>
      </div>
      <div id="login_user_password_panel" class="form_item">
        <a href="javascript:void(0)" onclick="window.openChangeRepositoryUserPasswordPanel()" class="change_password">Change password</a>
