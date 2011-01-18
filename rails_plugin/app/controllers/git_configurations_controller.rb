@@ -25,7 +25,7 @@ class GitConfigurationsController < ApplicationController
       end
       format.xml do
         if !@git_configuration.blank? 
-          render :xml => [@git_configuration].to_xml
+          render :xml => [@git_configuration].to_xml(:dasherize => false)
         else
           render :xml => "No Git configuration found in project #{@project.identifier}.", :status => 404
         end
@@ -46,7 +46,7 @@ class GitConfigurationsController < ApplicationController
   end
 
   def show
-    @git_configuration = MinglePlugins::Source.find_for(@project)
+    @git_configuration = GitConfiguration.find(:first, :conditions => ["marked_for_deletion = ? AND project_id = ?", false, @project.id])
     respond_to do |format|
       format.xml do
         if @git_configuration 

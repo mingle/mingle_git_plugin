@@ -31,3 +31,9 @@ else
   }
 end
 
+if defined?(RAILS_ENV)
+  GitConfiguration.class_eval do
+    include ::API::XMLSerializer
+    serializes_as :id, :marked_for_deletion, :project, :repository_path, :username
+  end
+end
