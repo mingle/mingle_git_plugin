@@ -69,6 +69,12 @@ class GitConfigurationTest < Test::Unit::TestCase
     assert_equal ["\n        The repository path appears to be of invalid URI format.\n        Please check your repository path.\n      "], config.errors.full_messages
   end
   
+  def test_repository_path_cannot_be_nil
+    config = GitConfiguration.create_or_update(@project_stub.id, nil, {:repository_path => '/tutorial/hello'})
+    config = GitConfiguration.create_or_update(@project_stub.id, config.id, {:repository_path => nil})
+    assert config.errors.full_messages.include?("Repository path can't be blank")
+  end
+  
   PATHS_WITH_USER_BUT_NO_PASSWORD = [ 
     'http://user@git.serpentine.com/tutorial/hello',
     'http://user:@git.serpentine.com/tutorial/hello',

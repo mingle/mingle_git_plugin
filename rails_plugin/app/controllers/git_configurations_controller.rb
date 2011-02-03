@@ -52,7 +52,7 @@ class GitConfigurationsController < ApplicationController
         if @git_configuration 
           render :xml => @git_configuration.to_xml
         else
-          render :xml => "No git configuration found in project #{@project.identifier}.", :status => 404
+          render :xml => "No Git configuration found in project #{@project.identifier}.", :status => 404
         end
       end
     end
@@ -80,7 +80,7 @@ class GitConfigurationsController < ApplicationController
     respond_to do |format|
       format.xml do
         if @git_configuration.errors.empty?
-          head :created, :location => url_for(:action => @git_configuration.id, :format => :xml)
+          head :created, :location => url_for(:action => :show, :format => 'xml', :id => @git_configuration.id)
         else
           render :xml => @git_configuration.errors.to_xml, :status => 422
         end

@@ -8,11 +8,15 @@ class GitConfiguration < ActiveRecord::Base
 
   strip_on_write
 
+
   belongs_to :project
-  validates_presence_of :repository_path
+  
+  
   after_create :remove_cache_dirs
   after_destroy :remove_cache_dirs
   before_save :encrypt_password
+  
+  validates_presence_of :repository_path
 
   def self.display_name
     "Git"
