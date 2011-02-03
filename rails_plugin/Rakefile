@@ -44,19 +44,19 @@ task :deploy => [:dist] do
   raise 'MINGLE_ROOT environment is undefined!' unless ENV['MINGLE_ROOT']
   
   rm_rf("#{ENV['MINGLE_ROOT']}/vendor/plugins/mingle_git_plugin")
-  cp('dist/mingle_git_plugin.tar.gz', "#{ENV['MINGLE_ROOT']}/vendor/plugins/")
+  cp('./dist/mingle_git_plugin.tar.gz', "#{ENV['MINGLE_ROOT']}/vendor/plugins/")
   `cd #{ENV['MINGLE_ROOT']}/vendor/plugins && tar xzvf mingle_git_plugin.tar.gz`
   rm("#{ENV['MINGLE_ROOT']}/vendor/plugins/mingle_git_plugin.tar.gz")
 end
 
 desc "Create distribution"
 task :dist => [:test] do
-  rm_rf('dist')
-  mkdir_p('dist/mingle_git_plugin')
+  rm_rf('./dist')
+  mkdir_p('./dist/mingle_git_plugin')
   ['app', 'config', 'db', 'init.rb'].each do |entry|
-    cp_r(entry, 'dist/mingle_git_plugin')
+    cp_r(entry, './dist/mingle_git_plugin')
   end
-  system('cd dist && tar czvf mingle_git_plugin.tar.gz mingle_git_plugin && rm -rf mingle_git_plugin')
+  system('cd ./dist && tar czvf mingle_git_plugin.tar.gz mingle_git_plugin && rm -rf ./mingle_git_plugin')
 end
 
 task :deploy_windows => [:deploy] do
