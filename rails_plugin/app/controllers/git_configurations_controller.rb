@@ -6,7 +6,7 @@ class GitConfigurationsController < ApplicationController
   verify :method => :post, :only => [ :save, :create ]
   verify :method => :put, :only => [ :update ]
 
-  privileges :project_admin => ['index', 'save', 'update', 'show', 'create']
+  privileges UserAccess::PrivilegeLevel::PROJECT_ADMIN => ['index', 'save', 'update', 'show', 'create']
 
   def current_tab
     Project::ADMIN_TAB_INFO
