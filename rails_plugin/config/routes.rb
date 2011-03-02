@@ -14,4 +14,8 @@ ActionController::Routing::Routes.draw do |map|
     git_conf.rest_git_configuration_show 'api/v2/projects/:project_id/git_configurations/:id.xml', :action => 'show', :conditions => {:method => :get}, :format => 'xml', :api_version => "v2"
   end
   
+  map.with_options :controller => "changesets" do |changesets|
+    changesets.changeset 'projects/:project_id/changesets/:rev', :action => 'show'
+  end
+
 end
