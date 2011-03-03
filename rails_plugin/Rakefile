@@ -5,7 +5,10 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 require 'rake/clean'
 
+ENV['RCOVPATH']="#{Gem.bindir}/rcov" if RUBY_PLATFORM =~ /java/
+
 CLOBBER.include('reports')
+
 
 begin
   require 'rcov/rcovtask'

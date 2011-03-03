@@ -1,3 +1,16 @@
 #!/bin/sh
 
-exec `dirname $0`/../tools/jruby-1.2.0/bin/jruby $*
+JRUBY_VERSION="1.5.5"
+
+HERE=$(cd "`dirname "$0"`" && pwd)
+
+
+if [ ! -d "$HERE/../tools/gems" ]; then
+  mkdir -p "$HERE/../tools/gems"
+fi
+
+export GEM_HOME=$(cd $HERE/../tools/gems && pwd)
+export GEM_PATH=$GEM_HOME
+
+exec $HERE/../tools/jruby-$JRUBY_VERSION/bin/jruby $@
+
