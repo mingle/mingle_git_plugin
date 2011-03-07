@@ -1,7 +1,7 @@
 # Copyright (c) 2010 ThoughtWorks Inc. (http://thoughtworks.com)
 # Licenced under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-class GitSourceController < ApplicationController
+class GitSourceController < ProjectApplicationController
   
   def load_latest_info
     revisions = @project.revisions.find(:all, :conditions => ["identifier in (?)", params[:commits]])
