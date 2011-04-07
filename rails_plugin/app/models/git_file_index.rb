@@ -28,8 +28,7 @@ class GitFileIndex
       current_commit_index = @commits.size - 1
 
       stdout.each_line do |line|
-        if /^([0-9a-fA-F]{40}) /.match(line)
-          current_commit = $1
+        if current_commit = GitUtils.extract_leading_rev_hash(line)
           current_commit_index += 1
           @commits.push(current_commit)
           need_update = true
