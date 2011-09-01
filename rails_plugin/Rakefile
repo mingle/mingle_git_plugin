@@ -36,6 +36,13 @@ Rcov::RcovTask.new(:test => [:clean, :clobber, 'ci:setup:testunit']) do |t|
   t.rcov_opts << ' --html'
 end
 
+desc "run tests without rcov"
+Rake::TestTask.new(:tt_test => [:clean, :clobber]) do |t|
+  t.libs << "tests"
+  t.test_files = FileList['tests/unit/**/*_test.rb']
+  t.verbose = true
+end
+
 task :open_report do
   `open reports/coverage/index.html`
 end
