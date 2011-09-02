@@ -123,4 +123,13 @@ class GitClientTest < Test::Unit::TestCase
     end
   end
 
+  def test_timeout_command_executing
+    git_client = TestRepositoryFactory.create_client_from_bundle("hello")
+    git_client.execution_timeout = 2
+    assert_raise Timeout::Error do
+      git_client.git('log') do
+        sleep(3)
+      end
+    end
+  end
 end

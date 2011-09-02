@@ -4,9 +4,14 @@
 require 'time'
 require 'fileutils'
 require 'open3'
+require 'timeout'
 
-class GitClient  
+class GitClient
+  
+  DEFAULT_EXECUTION_TIMEOUT = 3600 #1 HOUR
+
   cattr_accessor :logging_enabled
+  attr_accessor :execution_timeout
   attr_reader :clone_path, :file_index
 
   @@logging_enabled = (ENV["ENABLE_GIT_CLIENT_LOGGING"] && ENV["ENABLE_GIT_CLIENT_LOGGING"].downcase == 'true')
@@ -108,28 +113,26 @@ class GitClient
   
     execute(command, &block)
   end
-  
-  private
 
-  
-  def root_path?(path)
-    path == '.' || path.blank?
-  end
-  
-  
   def execute(command, &block)
+    ::Timeout.timeout(execution_timeout || DEFAULT_EXECUTION_TIMEOUT) do
+      execute_without_timeout(command, &block)
+    end
+  end
+
+  def execute_without_timeout(command, &block)
     sanitized_command = sanitize_logging(command)
-    
     start = Time.now
     puts "Executing command:\n#{sanitized_command}" if GitClient.logging_enabled
 
     error = nil
+
     begin
       Open3.popen3(command) do |stdin, stdout, stderr|
         stdin.close
-        
+
         yield(stdout) if block_given?
-        
+
         stdout.readlines if !stdout.closed? && !block_given?
         stdout.close 
 
@@ -141,7 +144,7 @@ class GitClient
         puts "*** execute using #{time_in_ms}ms"
       end
     end
-    
+
     sanitized_error = error.map{|e| sanitize_logging(e)}
 
     if error.any?
@@ -149,12 +152,18 @@ class GitClient
       puts "*** warning: the git client exited with an error:"
       puts sanitized_error
     end
-    
+
     if error.any? { |e| e.strip.start_with?("fatal:") }
       raise StandardError.new("Could not execute \"#{sanitized_command}\". The error was:\n#{sanitized_error}" )
     end
   end
   
+  private
+
+  
+  def root_path?(path)
+    path == '.' || path.blank?
+  end
   
   def git_log(command, limit=nil, &exclude_block)
     raise "Repository is empty!" if repository_empty?
@@ -211,6 +220,4 @@ class GitClient
   def sanitize_logging(text)
     text.gsub(@remote_master_info.path, @remote_master_info.log_safe_path)
   end
-  
 end
-
