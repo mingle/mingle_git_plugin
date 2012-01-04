@@ -2,6 +2,7 @@
 # Licenced under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 require 'uri'
+require 'cgi'
 class GitConfiguration < ActiveRecord::Base
 
   include RepositoryModelHelper
@@ -108,8 +109,8 @@ class GitConfiguration < ActiveRecord::Base
       
       remote_user = username.blank? ? uri.user : username
       
-      path = "#{uri.scheme}://#{remote_user.to_s}:#{password.to_s}@#{host_port_path_from(uri)}"
-      log_safe_path = "#{uri.scheme}://#{remote_user.to_s}:*****@#{host_port_path_from(uri)}"
+      path = "#{uri.scheme}://#{remote_user}:#{CGI.escape(CGI.unescape(password.to_s))}@#{host_port_path_from(uri)}"
+      log_safe_path = "#{uri.scheme}://#{remote_user}:*****@#{host_port_path_from(uri)}"
 
       if uri.scheme == 'git'
         path = "#{uri.scheme}://#{host_port_path_from(uri)}"

@@ -104,6 +104,22 @@ class GitConfigurationTest < Test::Unit::TestCase
     assert_equal 'http://sammy:soso@git.serpentine.com:80/tutorial/hello', config.remote_master_info.path
     assert_equal 'http://sammy:*****@git.serpentine.com:80/tutorial/hello', config.remote_master_info.log_safe_path
   end
+
+  def test_password_should_be_cgi_escaped_in_remote_master_info
+    config = GitConfiguration.new(:repository_path => 'http://git.serpentine.com/tutorial/hello')
+    config.project = Project.new
+    config.username = 'sammy'
+    config.password = 'http://@#%'
+    assert_equal 'http://sammy:http%3A%2F%2F%40%23%25@git.serpentine.com:80/tutorial/hello', config.remote_master_info.path
+  end
+  
+  def test_password_should_not_be_double_cgi_escaped_in_remote_master_info
+    config = GitConfiguration.new(:repository_path => 'http://git.serpentine.com/tutorial/hello')
+    config.project = Project.new
+    config.username = 'sammy'
+    config.password = 'http%3A%2F%2F%40%23%25'
+    assert_equal 'http://sammy:http%3A%2F%2F%40%23%25@git.serpentine.com:80/tutorial/hello', config.remote_master_info.path
+  end
   
   def test_remote_master_info_with_should_not_use_any_credentials_on_git_protocol
     config = GitConfiguration.new(:repository_path => 'git://git.serpentine.com:1234/tutorial/hello.git')
