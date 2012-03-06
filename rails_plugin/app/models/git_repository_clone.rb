@@ -1,6 +1,8 @@
 # Copyright (c) 2010 ThoughtWorks Inc. (http://thoughtworks.com)
 # Licenced under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0.txt)
 
+require 'fileutils'
+
 class GitRepositoryClone
     
   def initialize(repository, error_file_dir, project, retry_errored_connect = false)
@@ -34,11 +36,11 @@ class GitRepositoryClone
   end
   
   def delete_error_file
-    rm_f(error_file)
+    FileUtils.rm_f(error_file)
   end
   
   def write_error_file(e)    
-    mkdir_p(File.dirname(error_file))
+    FileUtils.mkdir_p(File.dirname(error_file))
     File.open(error_file, 'w') do |file|
       file << "Message:\n#{e.message}\n\nTrace:\n"
       file << e.backtrace.join("\n")
