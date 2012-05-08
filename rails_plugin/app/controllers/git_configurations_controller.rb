@@ -42,7 +42,7 @@ class GitConfigurationsController < ProjectApplicationController
       flash[:error] = @git_configuration.errors.full_messages.join(', ')
     end
 
-    redirect_to :action => 'index'
+    render :action => 'index'
   end
 
   def show
