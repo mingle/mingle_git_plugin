@@ -16,35 +16,6 @@ class GitConfigurationsController < ProjectApplicationController
     super.merge(:controller => 'repository')
   end
 
-  # render the settings page for git configuration
-  def index
-    @git_configuration = GitConfiguration.find(:first, :conditions => ["marked_for_deletion = ? AND project_id = ?", false, @project.id])
-    respond_to do |format|
-      format.html do
-        render :template => 'git_configurations/index'
-      end
-      format.xml do
-        if !@git_configuration.blank? 
-          render :xml => [@git_configuration].to_xml(:dasherize => false)
-        else
-          render :xml => "No Git configuration found in project #{@project.identifier}.", :status => 404
-        end
-      end
-    end
-  end
-
-  def save
-    create_or_update
-    if @git_configuration.errors.empty?
-      flash[:notice] = 'Repository settings were successfully saved.' 
-    else
-      set_rollback_only
-      flash[:error] = @git_configuration.errors.full_messages.join(', ')
-    end
-
-    render :action => 'index'
-  end
-
   def show
     @git_configuration = GitConfiguration.find(:first, :conditions => ["marked_for_deletion = ? AND project_id = ?", false, @project.id])
     respond_to do |format|
