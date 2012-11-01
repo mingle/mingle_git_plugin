@@ -14,6 +14,8 @@ h2. Requirements
 
 This plugin has been tested with and known to work with Mingle version 3.2, and git version 1.7.0 and above.
 
+If you are serving Mingle via a secured connection, this plugin currently only work with SSL.  If you have configured your web server to only allow TLS connections, the plugin will not work.
+
 h2. Installation
 
 * See "http://git-scm.com/download":http://git-scm.com/download on downloading git for your operating system.
