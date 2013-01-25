@@ -144,7 +144,7 @@ class GitConfiguration < ActiveRecord::Base
   # this is hacktastic, but we'd need to make some design changes to 
   # the mingle SCM API to avoid this check
   def retry_previously_failed_connection
-    RUBY_PLATFORM =~ /java/ && java.lang.Thread.current_thread.name == 'cache_revisions'
+    RUBY_PLATFORM =~ /java/ && java.lang.Thread.current_thread.name =~ 'cache_revisions'
   end
   
 end
